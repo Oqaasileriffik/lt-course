@@ -62,10 +62,10 @@ echo ""
 echo "Checking out repositories"
 mkdir -pv ~/langtech
 pushd ~/langtech
-svn co https://gtsvn.uit.no/langtech/trunk/giella-core
-svn co https://gtsvn.uit.no/langtech/trunk/giella-shared
-svn co https://gtsvn.uit.no/biggies/trunk/langs/kal/regression
-svn co https://gtsvn.uit.no/langtech/trunk/langs/kal
+svn co https://github.com/giellalt/giella-core/trunk giella-core
+svn co https://github.com/giellalt/giella-shared/trunk giella-shared
+svn co https://github.com/giellalt/regtest-kal/trunk regression
+svn co https://github.com/giellalt/lang-kal/trunk kal
 
 pushd ~/langtech/regression
 svn co https://github.com/TinoDidriksen/regtest/trunk/ regtest/
