@@ -38,22 +38,25 @@ export PERL_UNICODE=SDA
 
 set +e
 
-GREP=`egrep '^export GIELLA_CORE=~/langtech/giella-core' ~/.profile`
+GREP=`egrep '^export GIELLA_CORE=~/langtech/giella-core' ~/.profile ~/.zprofile 2>/dev/null`
 if [[ -z "$GREP" ]]; then
 	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.profile
 	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.bashrc
+	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.zprofile
 fi
 
-GREP=`egrep '^export GIELLA_SHARED=~/langtech/giella-shared' ~/.profile`
+GREP=`egrep '^export GIELLA_SHARED=~/langtech/giella-shared' ~/.profile ~/.zprofile 2>/dev/null`
 if [[ -z "$GREP" ]]; then
 	echo 'export GIELLA_SHARED=~/langtech/giella-shared' >> ~/.profile
 	echo 'export GIELLA_SHARED=~/langtech/giella-shared' >> ~/.bashrc
+	echo 'export GIELLA_SHARED=~/langtech/giella-shared' >> ~/.zprofile
 fi
 
-GREP=`egrep '^export PERL_UNICODE=SDA' ~/.profile`
+GREP=`egrep '^export PERL_UNICODE=SDA' ~/.profile ~/.zprofile 2>/dev/null`
 if [[ -z "$GREP" ]]; then
 	echo 'export PERL_UNICODE=SDA' >> ~/.profile
 	echo 'export PERL_UNICODE=SDA' >> ~/.bashrc
+	echo 'export PERL_UNICODE=SDA' >> ~/.zprofile
 fi
 
 set -e
@@ -94,3 +97,8 @@ autoreconf -fi
 ./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers --disable-hfst-dekstop-spellers
 make -j4
 popd
+
+mkdir -pv ~/bin
+curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/master/lecture01/scripts/update-macos.sh > ~/bin/update-tools.sh
+curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/master/lecture01/scripts/update-kal.sh > ~/bin/update-kal.sh
+chmod +x ~/bin/*.sh
