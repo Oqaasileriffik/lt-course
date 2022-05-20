@@ -67,6 +67,10 @@ if [[ -d ~/langtech/giella-shared ]]; then
 	pull_git_svn_revert ~/langtech/giella-shared
 fi
 
+if [[ -d ~/langtech/shared-mul ]]; then
+	pull_git_svn_revert ~/langtech/shared-mul
+fi
+
 if [[ -d ~/langtech/kal ]]; then
 	pushd ~/langtech/kal
 	if [[ -d .git ]]; then

@@ -67,6 +67,7 @@ mkdir -pv ~/langtech
 pushd ~/langtech
 svn co https://github.com/giellalt/giella-core/trunk giella-core
 svn co https://github.com/giellalt/giella-shared/trunk giella-shared
+svn co https://github.com/giellalt/shared-mul/trunk shared-mul
 svn co https://github.com/giellalt/regtest-kal/trunk regression
 svn co https://github.com/giellalt/lang-kal/trunk kal
 
