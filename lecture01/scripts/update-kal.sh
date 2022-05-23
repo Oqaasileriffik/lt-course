@@ -62,11 +62,6 @@ if [[ -d ~/langtech/giella-core ]]; then
 	pull_git_svn_revert ~/langtech/giella-core
 fi
 
-if [[ -d ~/langtech/giella-shared ]]; then
-	export GIELLA_SHARED=~/langtech/giella-shared
-	pull_git_svn_revert ~/langtech/giella-shared
-fi
-
 if [[ -d ~/langtech/shared-mul ]]; then
 	pull_git_svn_revert ~/langtech/shared-mul
 fi

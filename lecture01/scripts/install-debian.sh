@@ -29,7 +29,6 @@ echo "Installing more dependencies"
 sudo apt-get -qf install --no-install-recommends cg3-dev divvun-gramcheck foma hfst libhfst-dev hfst-ospell hfst-ospell-dev
 
 export GIELLA_CORE=~/langtech/giella-core
-export GIELLA_SHARED=~/langtech/giella-shared
 export PERL_UNICODE=SDA
 
 set +e
@@ -38,12 +37,6 @@ GREP=`egrep '^export GIELLA_CORE=~/langtech/giella-core' ~/.profile`
 if [[ -z "$GREP" ]]; then
 	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.profile
 	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.bashrc
-fi
-
-GREP=`egrep '^export GIELLA_SHARED=~/langtech/giella-shared' ~/.profile`
-if [[ -z "$GREP" ]]; then
-	echo 'export GIELLA_SHARED=~/langtech/giella-shared' >> ~/.profile
-	echo 'export GIELLA_SHARED=~/langtech/giella-shared' >> ~/.bashrc
 fi
 
 GREP=`egrep '^export PERL_UNICODE=SDA' ~/.profile`
@@ -59,7 +52,6 @@ echo "Checking out repositories"
 mkdir -pv ~/langtech
 pushd ~/langtech
 svn co https://github.com/giellalt/giella-core/trunk giella-core
-svn co https://github.com/giellalt/giella-shared/trunk giella-shared
 svn co https://github.com/giellalt/shared-mul/trunk shared-mul
 svn co https://github.com/giellalt/regtest-kal/trunk regression
 svn co https://github.com/giellalt/lang-kal/trunk kal
@@ -77,8 +69,8 @@ make
 popd
 
 echo ""
-echo "Building giella-shared"
-pushd ~/langtech/giella-shared
+echo "Building shared-mul"
+pushd ~/langtech/shared-mul
 autoreconf -fi
 ./configure
 make
@@ -88,6 +80,6 @@ echo ""
 echo "Building kal"
 pushd ~/langtech/kal
 autoreconf -fi
-./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers --disable-hfst-dekstop-spellers
+./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
 make -j4
 popd
