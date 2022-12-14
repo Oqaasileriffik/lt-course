@@ -27,6 +27,7 @@ function pull_git_svn_revert {
 		git remote update -p
 		git reflog expire --expire=now --all
 		git reset --hard HEAD
+		git pull --all --rebase --autostash
 	else
 		svn cleanup
 		svn upgrade
