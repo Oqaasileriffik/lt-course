@@ -91,6 +91,6 @@ make -j4
 popd
 
 mkdir -pv ~/bin
-curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/master/lecture01/scripts/update-macos.sh > ~/bin/update-tools.sh
-curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/master/lecture01/scripts/update-kal.sh > ~/bin/update-kal.sh
+curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-macos.sh > ~/bin/update-tools.sh
+curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-kal.sh > ~/bin/update-kal.sh
 chmod +x ~/bin/*.sh
