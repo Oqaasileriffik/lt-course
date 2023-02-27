@@ -1,1 +1,0 @@
-update-kal.sh
