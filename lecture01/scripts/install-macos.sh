@@ -24,13 +24,13 @@ sudo port uninstall inactive
 
 echo ""
 echo "Installing required ports"
-for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-plack p5-yaml-libyaml p5-json p5-json-xs timeout python310 gsed icu gh
+for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-plack p5-yaml-libyaml p5-json p5-json-xs timeout python311 gsed icu gh
 do
 	echo "... installing $PKG"
 	yes | sudo port install "$PKG" || echo "FAILED TO INSTALL $PKG"
 done
 
-sudo port select --set python3 python310
+sudo port select --set python3 python311
 
 export GIELLA_CORE=~/langtech/giella-core
 export PERL_UNICODE=SDA
