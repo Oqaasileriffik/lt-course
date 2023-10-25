@@ -5,6 +5,21 @@ if [[ `whoami` != 'root' ]]; then
     exit
 fi
 
+# Update self from GitHub
+rm -f /tmp/update-tools.sh
+curl -s https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-macos.sh > /tmp/update-tools.sh
+if [[ -s "/tmp/update-tools.sh" ]]; then
+	A=$(cat /tmp/update-tools.sh | shasum)
+	B=$(cat ~/bin/update-tools.sh | shasum)
+	if [[ "$A" != "$B" ]]; then
+		mv -v /tmp/update-tools.sh ~/bin/update-tools.sh
+		chmod +x ~/bin/update-tools.sh
+		echo "Newer update-tools.sh found - restarting..."
+		exec ~/bin/update-tools.sh
+		exit
+	fi
+fi
+
 echo "Updating tools"
 cd /tmp/
 curl https://apertium.projectjj.com/osx/install-nightly.sh | bash

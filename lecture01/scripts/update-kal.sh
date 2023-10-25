@@ -5,6 +5,21 @@ if [[ `whoami` == 'root' ]]; then
     exit
 fi
 
+# Update self from GitHub
+rm -f /tmp/update-kal.sh
+curl -s https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-kal.sh > /tmp/update-kal.sh
+if [[ -s "/tmp/update-kal.sh" ]]; then
+	A=$(cat /tmp/update-kal.sh | shasum)
+	B=$(cat ~/bin/update-kal.sh | shasum)
+	if [[ "$A" != "$B" ]]; then
+		mv -v /tmp/update-kal.sh ~/bin/update-kal.sh
+		chmod +x ~/bin/update-kal.sh
+		echo "Newer update-kal.sh found - restarting..."
+		exec ~/bin/update-kal.sh
+		exit
+	fi
+fi
+
 export LD_PRELOAD=libtcmalloc_minimal.so
 
 function pull_git_svn {
@@ -42,16 +57,29 @@ function pull_git_svn_revert {
 	popd
 }
 
+# Clean up old stuff
+if [[ -d ~/langtech/regression/regtest ]]; then
+	rm -rfv ~/langtech/regression/regtest
+fi
+if [[ -d ~/langtech/gloss ]]; then
+	rm -rfv ~/langtech/gloss
+fi
+
 if [[ -d ~/langtech/regression ]]; then
 	pull_git_svn ~/langtech/regression
 fi
 
-if [[ -d ~/langtech/regression/regtest ]]; then
-	pull_git_svn ~/langtech/regression/regtest
+if [[ ! -d ~/langtech/regtest ]]; then
+	git clone https://github.com/TinoDidriksen/regtest ~/langtech/regtest
+fi
+if [[ -d ~/langtech/regtest ]]; then
+	pull_git_svn ~/langtech/regtest
 fi
 
 if [[ -d ~/langtech/nutserut ]]; then
 	pull_git_svn ~/langtech/nutserut
+	rm -rf ~/langtech/nutserut/regtest
+	ln -s ../regtest ~/langtech/nutserut/regtest
 fi
 
 if [[ -d ~/langtech/corpora ]]; then
@@ -77,6 +105,6 @@ if [[ -d ~/langtech/kal ]]; then
 	pull_git_svn ~/langtech/kal
 	autoreconf -fvi
 	./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
-	make -j4
+	make -j8
 	popd
 fi

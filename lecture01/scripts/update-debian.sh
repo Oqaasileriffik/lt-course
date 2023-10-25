@@ -11,6 +11,21 @@ if [[ `whoami` != 'root' ]]; then
     exit
 fi
 
+# Update self from GitHub
+rm -f /tmp/update-tools.sh
+curl -s https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-debian.sh > /tmp/update-tools.sh
+if [[ -s "/tmp/update-tools.sh" ]]; then
+	A=$(cat /tmp/update-tools.sh | shasum)
+	B=$(cat ~/bin/update-tools.sh | shasum)
+	if [[ "$A" != "$B" ]]; then
+		mv -v /tmp/update-tools.sh ~/bin/update-tools.sh
+		chmod +x ~/bin/update-tools.sh
+		echo "Newer update-tools.sh found - restarting..."
+		exec ~/bin/update-tools.sh
+		exit
+	fi
+fi
+
 echo "Updating dependencies from apt-get"
 apt-get -qy update
 apt-get -qf install --no-install-recommends autoconf automake make wget libfile-homedir-perl libipc-run-perl libplack-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
