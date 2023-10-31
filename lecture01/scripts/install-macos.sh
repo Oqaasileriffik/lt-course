@@ -61,10 +61,7 @@ svn co https://github.com/giellalt/giella-core/trunk giella-core
 svn co https://github.com/giellalt/shared-mul/trunk shared-mul
 svn co https://github.com/giellalt/regtest-kal/trunk regression
 svn co https://github.com/giellalt/lang-kal/trunk kal
-
-pushd ~/langtech/regression
-svn co https://github.com/TinoDidriksen/regtest/trunk/ regtest/
-popd
+git clone https://github.com/TinoDidriksen/regtest ~/langtech/regtest
 
 echo ""
 echo "Building giella-core"
@@ -87,7 +84,7 @@ echo "Building kal"
 pushd ~/langtech/kal
 autoreconf -fi
 ./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
-make -j4
+make -j8
 popd
 
 mkdir -pv ~/bin

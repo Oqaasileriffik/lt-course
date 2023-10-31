@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ `whoami` != 'root' ]]; then
-    echo "This script must run with or as root"
+    echo "This script must run with sudo or as root"
     exit
 fi
 
