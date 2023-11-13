@@ -76,6 +76,16 @@ if [[ -d ~/langtech/regtest ]]; then
 	pull_git_svn ~/langtech/regtest
 fi
 
+if [[ ! -d ~/langtech/katersat ]]; then
+	git clone https://github.com/Oqaasileriffik/katersat ~/langtech/katersat
+fi
+if [[ -d ~/langtech/katersat ]]; then
+	pushd ~/langtech/katersat
+	pull_git_svn ~/langtech/katersat
+	./update.py
+	popd
+fi
+
 if [[ -d ~/langtech/nutserut ]]; then
 	pull_git_svn ~/langtech/nutserut
 	rm -rf ~/langtech/nutserut/regtest
