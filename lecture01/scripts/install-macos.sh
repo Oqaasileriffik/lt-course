@@ -53,15 +53,23 @@ fi
 
 set -e
 
+git config --global pull.rebase true
+git config --global rebase.autoStash true
+git config --global pull.ff only
+git config --global fetch.prune true
+git config --global diff.colorMoved zebra
+git config --global push.default simple
+
 echo ""
 echo "Checking out repositories"
 mkdir -pv ~/langtech
 pushd ~/langtech
-svn co https://github.com/giellalt/giella-core/trunk giella-core
-svn co https://github.com/giellalt/shared-mul/trunk shared-mul
-svn co https://github.com/giellalt/regtest-kal/trunk regression
-svn co https://github.com/giellalt/lang-kal/trunk kal
-git clone https://github.com/TinoDidriksen/regtest ~/langtech/regtest
+git clone https://github.com/giellalt/giella-core giella-core
+git clone https://github.com/giellalt/shared-mul shared-mul
+git clone https://github.com/giellalt/regtest-kal regression
+git clone https://github.com/giellalt/lang-kal kal
+git clone https://github.com/TinoDidriksen/regtest regtest
+git clone https://github.com/Oqaasileriffik/katersat katersat
 
 echo ""
 echo "Building giella-core"

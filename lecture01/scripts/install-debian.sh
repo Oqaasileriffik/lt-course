@@ -18,7 +18,7 @@ fi
 
 echo "Installing dependencies from apt-get - this may ask for your sudo password"
 sudo apt-get -qy update
-sudo apt-get -qf install --no-install-recommends autoconf automake make wget libfile-homedir-perl libipc-run-perl libplack-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
+sudo apt-get -qf install --no-install-recommends autoconf automake make wget curl libfile-homedir-perl libipc-run-perl libplack-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
 
 echo ""
 echo "Enabling Apertium Nightly repository"
@@ -33,32 +33,39 @@ export PERL_UNICODE=SDA
 
 set +e
 
-GREP=`egrep '^export GIELLA_CORE=~/langtech/giella-core' ~/.profile`
+GREP=`egrep '^export GIELLA_CORE=~/langtech/giella-core' ~/.profile ~/.zprofile 2>/dev/null`
 if [[ -z "$GREP" ]]; then
 	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.profile
 	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.bashrc
+	echo 'export GIELLA_CORE=~/langtech/giella-core' >> ~/.zprofile
 fi
 
-GREP=`egrep '^export PERL_UNICODE=SDA' ~/.profile`
+GREP=`egrep '^export PERL_UNICODE=SDA' ~/.profile ~/.zprofile 2>/dev/null`
 if [[ -z "$GREP" ]]; then
 	echo 'export PERL_UNICODE=SDA' >> ~/.profile
 	echo 'export PERL_UNICODE=SDA' >> ~/.bashrc
+	echo 'export PERL_UNICODE=SDA' >> ~/.zprofile
 fi
 
 set -e
+
+git config --global pull.rebase true
+git config --global rebase.autoStash true
+git config --global pull.ff only
+git config --global fetch.prune true
+git config --global diff.colorMoved zebra
+git config --global push.default simple
 
 echo ""
 echo "Checking out repositories"
 mkdir -pv ~/langtech
 pushd ~/langtech
-svn co https://github.com/giellalt/giella-core/trunk giella-core
-svn co https://github.com/giellalt/shared-mul/trunk shared-mul
-svn co https://github.com/giellalt/regtest-kal/trunk regression
-svn co https://github.com/giellalt/lang-kal/trunk kal
-
-pushd ~/langtech/regression
-svn co https://github.com/TinoDidriksen/regtest/trunk/ regtest/
-popd
+git clone https://github.com/giellalt/giella-core giella-core
+git clone https://github.com/giellalt/shared-mul shared-mul
+git clone https://github.com/giellalt/regtest-kal regression
+git clone https://github.com/giellalt/lang-kal kal
+git clone https://github.com/TinoDidriksen/regtest regtest
+git clone https://github.com/Oqaasileriffik/katersat katersat
 
 echo ""
 echo "Building giella-core"
@@ -83,3 +90,8 @@ autoreconf -fi
 ./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
 make -j4
 popd
+
+mkdir -pv ~/bin
+curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-debian.sh > ~/bin/update-tools.sh
+curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-kal.sh > ~/bin/update-kal.sh
+chmod +x ~/bin/*.sh

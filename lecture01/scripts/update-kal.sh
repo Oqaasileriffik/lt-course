@@ -108,7 +108,7 @@ fi
 if [[ -d ~/langtech/kal ]]; then
 	pushd ~/langtech/kal
 	if [[ -d .git ]]; then
-		git restore docs
+		git checkout -- docs
 	else
 		svn revert -R docs
 	fi
