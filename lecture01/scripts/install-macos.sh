@@ -59,6 +59,8 @@ git config --global pull.ff only
 git config --global fetch.prune true
 git config --global diff.colorMoved zebra
 git config --global push.default simple
+git config --global core.eol lf
+git config --global core.autocrlf false
 
 echo ""
 echo "Checking out repositories"
@@ -99,3 +101,8 @@ mkdir -pv ~/bin
 curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-macos.sh > ~/bin/update-tools.sh
 curl https://raw.githubusercontent.com/Oqaasileriffik/lt-course/main/lecture01/scripts/update-kal.sh > ~/bin/update-kal.sh
 chmod +x ~/bin/*.sh
+
+echo "MANUAL TODO:"
+echo "Run these to set your name and email. Use the same name and email as you do for GitHub:"
+echo '$ git config --global user.name "Your Name Goes Here"'
+echo '$ git config --global user.email "your@email.com"'

@@ -37,6 +37,8 @@ git config --global pull.ff only
 git config --global fetch.prune true
 git config --global diff.colorMoved zebra
 git config --global push.default simple
+git config --global core.eol lf
+git config --global core.autocrlf false
 
 cd ~/langtech
 rm -rf tmp-gh
@@ -101,4 +103,9 @@ if [[ -d kal/.svn ]]; then
 	echo ""
 fi
 
-echo "All done - for git commands, see https://docs.google.com/document/d/1EJwhMETEMqAT4jQUDKoTg1cS35RBpMug9oKtd9E_za8"
+echo "Conversion done. For git commands, see https://docs.google.com/document/d/1EJwhMETEMqAT4jQUDKoTg1cS35RBpMug9oKtd9E_za8"
+
+echo "MANUAL TODO:"
+echo "Run these to set your name and email. Use the same name and email as you do for GitHub:"
+echo '$ git config --global user.name "Your Name Goes Here"'
+echo '$ git config --global user.email "your@email.com"'
