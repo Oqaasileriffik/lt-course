@@ -22,6 +22,20 @@ fi
 
 export LD_PRELOAD=libtcmalloc_minimal.so
 
+git config --global pull.rebase true
+git config --global rebase.autoStash true
+git config --global pull.ff only
+git config --global fetch.prune true
+git config --global diff.colorMoved zebra
+git config --global push.default simple
+git config --global core.eol lf
+git config --global core.autocrlf false
+git config --global status.short true
+git config --global alias.up 'pull --all --rebase --autostash'
+git config --global alias.ci 'commit'
+git config --global blame.showEmail true
+git config --global blame.date short
+
 function pull_git_svn {
 	pushd "$1"
 	if [[ -d .git ]]; then
