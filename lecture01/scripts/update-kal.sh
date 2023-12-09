@@ -112,11 +112,11 @@ fi
 
 if [[ -d ~/langtech/giella-core ]]; then
 	export GIELLA_CORE=~/langtech/giella-core
-	pull_git_svn_revert ~/langtech/giella-core
+	pull_git_svn ~/langtech/giella-core
 fi
 
 if [[ -d ~/langtech/shared-mul ]]; then
-	pull_git_svn_revert ~/langtech/shared-mul
+	pull_git_svn ~/langtech/shared-mul
 fi
 
 if [[ -d ~/langtech/kal ]]; then
