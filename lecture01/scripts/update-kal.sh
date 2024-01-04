@@ -75,9 +75,6 @@ function pull_git_svn_revert {
 if [[ -d ~/langtech/regression/regtest ]]; then
 	rm -rfv ~/langtech/regression/regtest
 fi
-if [[ -d ~/langtech/gloss ]]; then
-	rm -rfv ~/langtech/gloss
-fi
 
 if [[ -d ~/langtech/regression ]]; then
 	pull_git_svn ~/langtech/regression
@@ -98,6 +95,13 @@ if [[ -d ~/langtech/katersat ]]; then
 	pull_git_svn ~/langtech/katersat
 	./update.py
 	popd
+fi
+
+if [[ ! -d ~/langtech/gloss ]]; then
+	git clone https://github.com/Oqaasileriffik/gloss ~/langtech/gloss
+fi
+if [[ -d ~/langtech/gloss ]]; then
+	pull_git_svn ~/langtech/gloss
 fi
 
 if [[ -d ~/langtech/nutserut ]]; then
