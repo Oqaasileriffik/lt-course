@@ -49,25 +49,19 @@ function pull_git_svn {
 	popd
 }
 
-function pull_git_svn_revert {
+function pull_acm {
 	pushd "$1"
-	if [[ -d .git ]]; then
-		git fetch --all -f
-		git remote update -p
-		git reflog expire --expire=now --all
-		git reset --hard HEAD
-		git pull --all --rebase --autostash
-	else
-		svn cleanup
-		svn upgrade
-		svn revert -R .
-		svn stat --no-ignore | grep '^[?I]' | xargs -n1 rm -rfv --
-		svn up
-		svn cleanup
+	CHANGED=$(git fetch --dry-run)
+	git fetch --all -f
+	git remote update -p
+	git reflog expire --expire=now --all
+	git reset --hard HEAD
+	git pull --all --rebase --autostash
+	if [[ ! -z "$CHANGED" ]]; then
+		autoreconf -fvi
+		./configure
+		make
 	fi
-	autoreconf -fvi
-	./configure
-	make
 	popd
 }
 
@@ -116,11 +110,11 @@ fi
 
 if [[ -d ~/langtech/giella-core ]]; then
 	export GIELLA_CORE=~/langtech/giella-core
-	pull_git_svn ~/langtech/giella-core
+	pull_acm ~/langtech/giella-core
 fi
 
 if [[ -d ~/langtech/shared-mul ]]; then
-	pull_git_svn ~/langtech/shared-mul
+	pull_acm ~/langtech/shared-mul
 fi
 
 if [[ -d ~/langtech/kal ]]; then
