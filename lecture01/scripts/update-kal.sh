@@ -51,7 +51,7 @@ function pull_git_svn {
 
 function pull_acm {
 	pushd "$1"
-	CHANGED=$(git fetch --dry-run)
+	CHANGED=$(git fetch --dry-run 2>&1)
 	git fetch --all -f
 	git remote update -p
 	git reflog expire --expire=now --all
