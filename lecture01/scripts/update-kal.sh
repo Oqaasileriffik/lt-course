@@ -21,6 +21,7 @@ if [[ -s "/tmp/update-kal.sh" ]]; then
 fi
 
 export LD_PRELOAD=libtcmalloc_minimal.so
+NEED_RECONF=""
 
 git config --global pull.rebase true
 git config --global rebase.autoStash true
@@ -36,22 +37,16 @@ git config --global alias.ci 'commit'
 git config --global blame.showEmail true
 git config --global blame.date short
 
-function pull_git_svn {
+function git_pull {
 	pushd "$1"
-	if [[ -d .git ]]; then
-		git pull --rebase --autostash --all
-	else
-		svn cleanup
-		svn upgrade
-		svn up
-		svn cleanup
-	fi
+	git pull --rebase --autostash --all
 	popd
 }
 
 function pull_acm {
 	pushd "$1"
 	CHANGED=$(git fetch --dry-run 2>&1)
+	NEED_RECONF+=$CHANGED
 	git fetch --all -f
 	git remote update -p
 	git reflog expire --expire=now --all
@@ -71,14 +66,14 @@ if [[ -d ~/langtech/regression/regtest ]]; then
 fi
 
 if [[ -d ~/langtech/regression ]]; then
-	pull_git_svn ~/langtech/regression
+	git_pull ~/langtech/regression
 fi
 
 if [[ ! -d ~/langtech/regtest ]]; then
 	git clone https://github.com/TinoDidriksen/regtest ~/langtech/regtest
 fi
 if [[ -d ~/langtech/regtest ]]; then
-	pull_git_svn ~/langtech/regtest
+	git_pull ~/langtech/regtest
 fi
 
 if [[ ! -d ~/langtech/katersat ]]; then
@@ -86,7 +81,7 @@ if [[ ! -d ~/langtech/katersat ]]; then
 fi
 if [[ -d ~/langtech/katersat ]]; then
 	pushd ~/langtech/katersat
-	pull_git_svn ~/langtech/katersat
+	git pull --rebase --autostash --all
 	./update.py
 	popd
 fi
@@ -95,17 +90,17 @@ if [[ ! -d ~/langtech/gloss ]]; then
 	git clone https://github.com/Oqaasileriffik/gloss ~/langtech/gloss
 fi
 if [[ -d ~/langtech/gloss ]]; then
-	pull_git_svn ~/langtech/gloss
+	git_pull ~/langtech/gloss
 fi
 
 if [[ -d ~/langtech/nutserut ]]; then
-	pull_git_svn ~/langtech/nutserut
+	git_pull ~/langtech/nutserut
 	rm -rf ~/langtech/nutserut/regtest
 	ln -s ../regtest ~/langtech/nutserut/regtest
 fi
 
 if [[ -d ~/langtech/corpora ]]; then
-	pull_git_svn ~/langtech/corpora
+	git_pull ~/langtech/corpora
 fi
 
 if [[ -d ~/langtech/giella-core ]]; then
@@ -119,14 +114,18 @@ fi
 
 if [[ -d ~/langtech/kal ]]; then
 	pushd ~/langtech/kal
-	if [[ -d .git ]]; then
-		git checkout -- docs
-	else
-		svn revert -R docs
+	git checkout -- docs
+
+	NEED_RECONF+=$(git fetch --dry-run 2>&1)
+	git pull --rebase --autostash --all
+	if [[ ! -z "$NEED_RECONF" ]]; then
+		autoreconf -fvi
+		./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
 	fi
-	pull_git_svn ~/langtech/kal
-	autoreconf -fvi
-	./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
-	make -j8
+
+	NEED_RECONF+=$(git status -uno 2>&1)
+	if [[ ! -z "$NEED_RECONF" ]]; then
+		make -j8
+	fi
 	popd
 fi
