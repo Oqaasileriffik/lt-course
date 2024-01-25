@@ -40,4 +40,4 @@ do
 	yes | port install "$PKG" || echo "FAILED TO INSTALL $PKG"
 done
 
-sudo port select --set python3 python311
+port select --set python3 python311
