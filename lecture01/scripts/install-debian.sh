@@ -18,7 +18,7 @@ fi
 
 echo "Installing dependencies from apt-get - this may ask for your sudo password"
 sudo apt-get -qy update
-sudo apt-get -qf install --no-install-recommends autoconf automake make wget curl libfile-homedir-perl libipc-run-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 python3-json5 zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
+sudo apt-get -qf install --no-install-recommends autoconf automake make wget curl libfile-homedir-perl libipc-run-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 python3-json5 python3-levenshtein zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
 
 echo ""
 echo "Enabling Apertium Nightly repository"
