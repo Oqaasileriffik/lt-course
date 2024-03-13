@@ -52,7 +52,7 @@ function pull_acm {
 	git reflog expire --expire=now --all
 	git reset --hard HEAD
 	git pull --all --rebase --autostash
-	if [[ ! -z "$CHANGED" ]]; then
+	if [[ ! -z "$CHANGED" || ! -s "configure" || ! -s "Makefile" ]]; then
 		autoreconf -fvi
 		./configure
 		make
@@ -118,7 +118,8 @@ if [[ -d ~/langtech/kal ]]; then
 
 	NEED_RECONF+=$(git fetch --dry-run 2>&1)
 	git pull --rebase --autostash --all
-	if [[ ! -z "$NEED_RECONF" ]]; then
+	if [[ ! -z "$NEED_RECONF" || ! -s "configure" || ! -s "Makefile" ]]; then
+		NEED_RECONF+='1'
 		autoreconf -fvi
 		./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
 	fi
