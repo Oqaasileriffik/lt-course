@@ -28,7 +28,7 @@ fi
 
 echo "Updating dependencies from apt-get"
 apt-get -qy update
-apt-get -qf install --no-install-recommends autoconf automake make wget libfile-homedir-perl libipc-run-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 python3-json5 python3-levenshtein python3-yaml python3-click zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
+apt-get -qf install --no-install-recommends autoconf automake make wget libfile-homedir-perl libipc-run-perl libyaml-libyaml-perl libjson-perl libjson-xs-perl pkg-config python3 python3-json5 python3-levenshtein python3-yaml python3-click python3-lxml zip gawk bc ca-certificates subversion git xz-utils icu-devtools gh
 
 echo ""
 echo "Updating more dependencies"
