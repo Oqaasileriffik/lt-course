@@ -12,7 +12,7 @@ fi
 
 echo "Installing tools - this may ask for your sudo password"
 cd /tmp/
-sudo curl https://apertium.projectjj.com/osx/install-nightly.sh | sudo bash
+curl https://apertium.projectjj.com/osx/install-nightly.sh | bash
 
 echo "Updating MacPorts"
 sudo port selfupdate
