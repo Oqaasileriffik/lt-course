@@ -26,7 +26,7 @@ wget https://apertium.projectjj.com/apt/install-nightly.sh -O - | sudo bash
 
 echo ""
 echo "Installing more dependencies"
-sudo apt-get -qf install --no-install-recommends cg3-dev divvun-gramcheck foma hfst libhfst-dev hfst-ospell hfst-ospell-dev
+sudo apt-get -qf install --no-install-recommends cg3-dev divvun-gramcheck foma hfst libhfst-dev hfst-ospell hfst-ospell-dev python3-corpustools python3-gtgramtools
 
 export GIELLA_CORE=~/langtech/giella-core
 export PERL_UNICODE=SDA

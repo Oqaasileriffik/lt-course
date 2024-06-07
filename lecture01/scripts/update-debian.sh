@@ -32,4 +32,4 @@ apt-get -qf install --no-install-recommends autoconf automake make wget libfile-
 
 echo ""
 echo "Updating more dependencies"
-apt-get -qf install --no-install-recommends cg3-dev divvun-gramcheck foma hfst libhfst-dev hfst-ospell hfst-ospell-dev
+apt-get -qf install --no-install-recommends cg3-dev divvun-gramcheck foma hfst libhfst-dev hfst-ospell hfst-ospell-dev python3-corpustools python3-gtgramtools
