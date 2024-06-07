@@ -98,8 +98,8 @@ echo ""
 echo "Building kal"
 pushd ~/langtech/kal
 autoreconf -fi
-./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
-make -j8
+./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-grammarchecker --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
+make -j
 popd
 
 mkdir -pv ~/bin

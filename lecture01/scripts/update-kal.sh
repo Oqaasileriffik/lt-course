@@ -20,7 +20,11 @@ if [[ -s "/tmp/update-kal.sh" ]]; then
 	fi
 fi
 
-export LD_PRELOAD=libtcmalloc_minimal.so
+if [[ `uname -s` == 'Darwin' ]]; then
+	export "PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.12/site-packages"
+else
+	export LD_PRELOAD=libtcmalloc_minimal.so
+fi
 NEED_RECONF=""
 
 git config --global pull.rebase true
@@ -121,12 +125,15 @@ if [[ -d ~/langtech/kal ]]; then
 	if [[ ! -z "$NEED_RECONF" || ! -s "configure" || ! -s "Makefile" ]]; then
 		NEED_RECONF+='1'
 		autoreconf -fvi
-		./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
+		./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-grammarchecker --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
 	fi
 
 	NEED_RECONF+=$(git status -uno 2>&1)
 	if [[ ! -z "$NEED_RECONF" ]]; then
-		make -j8
+		make -j
+		pushd tools/grammarcheckers
+		make dev
+		popd
 	fi
 	popd
 fi
