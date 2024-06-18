@@ -122,18 +122,30 @@ if [[ -d ~/langtech/kal ]]; then
 
 	NEED_RECONF+=$(git fetch --dry-run 2>&1)
 	git pull --rebase --autostash --all
+
+	echo "'$@'" > config.kal.new
+	if [[ ! -s "config.kal" ]]; then
+		echo "1" > config.kal
+	fi
+	A=$(cat config.kal | shasum)
+	B=$(cat config.kal.new | shasum)
+	if [[ "$A" != "$B" ]]; then
+		NEED_RECONF+='1'
+	fi
+
 	if [[ ! -z "$NEED_RECONF" || ! -s "configure" || ! -s "Makefile" ]]; then
 		NEED_RECONF+='1'
 		autoreconf -fvi
-		./configure --without-forrest --with-hfst --without-xfst --enable-spellers --enable-grammarchecker --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers
+		./configure --without-forrest --with-hfst --without-xfst --enable-hyperminimisation --enable-alignment --enable-minimised-spellers --enable-syntax --enable-analysers --enable-generators --enable-tokenisers --with-backend-format=foma --disable-hfst-desktop-spellers "$@"
 	fi
 
 	NEED_RECONF+=$(git status -uno 2>&1)
 	if [[ ! -z "$NEED_RECONF" ]]; then
 		make -j
 		pushd tools/grammarcheckers
-		make dev
+			make dev
 		popd
+		mv config.kal.new config.kal
 	fi
 	popd
 fi
