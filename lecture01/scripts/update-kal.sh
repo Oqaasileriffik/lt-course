@@ -141,10 +141,10 @@ if [[ -d ~/langtech/kal ]]; then
 
 	NEED_RECONF+=$(git status -uno 2>&1)
 	if [[ ! -z "$NEED_RECONF" ]]; then
-		make -j
 		pushd tools/grammarcheckers
 			make dev
 		popd
+		make -j
 		mv config.kal.new config.kal
 	fi
 	popd
