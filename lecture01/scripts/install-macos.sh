@@ -24,7 +24,7 @@ sudo port uninstall inactive
 
 echo ""
 echo "Installing required ports"
-for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-yaml-libyaml p5-json p5-json-xs timeout python312 py312-regex py312-json5 py312-levenshtein py312-yaml py312-click py312-lxml gsed icu gh realpath
+for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-yaml-libyaml p5-json p5-json-xs timeout python312 py312-regex py312-json5 py312-levenshtein py312-yaml py312-click py312-lxml gsed gmake icu gh realpath
 do
 	echo "... installing $PKG"
 	yes | sudo port install "$PKG" || echo "FAILED TO INSTALL $PKG"
@@ -49,6 +49,13 @@ if [[ -z "$GREP" ]]; then
 	echo 'export PERL_UNICODE=SDA' >> ~/.profile
 	echo 'export PERL_UNICODE=SDA' >> ~/.bashrc
 	echo 'export PERL_UNICODE=SDA' >> ~/.zprofile
+fi
+
+GREP=`egrep 'export "PATH' ~/.profile ~/.zprofile 2>/dev/null | grep /libexec/gnubin`
+if [[ -z "$GREP" ]]; then
+	echo 'export "PATH=/opt/local/libexec/gnubin:$PATH"' >> ~/.profile
+	echo 'export "PATH=/opt/local/libexec/gnubin:$PATH"' >> ~/.bashrc
+	echo 'export "PATH=/opt/local/libexec/gnubin:$PATH"' >> ~/.zprofile
 fi
 
 set -e
