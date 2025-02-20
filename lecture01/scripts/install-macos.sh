@@ -35,6 +35,7 @@ sudo port select --set python3 python312
 export GIELLA_CORE=~/langtech/giella-core
 export PERL_UNICODE=SDA
 export "PATH=/opt/local/libexec/gnubin:$PATH"
+export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.12/site-packages"
 
 set +e
 
@@ -59,6 +60,13 @@ if [[ -z "$GREP" ]]; then
 	echo 'export "PATH=/opt/local/libexec/gnubin:$PATH"' >> ~/.zprofile
 fi
 
+GREP=`egrep 'export PYTHONPATH' ~/.profile ~/.zprofile 2>/dev/null | grep python3.12/site-packages`
+if [[ -z "$GREP" ]]; then
+	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.12/site-packages"' >> ~/.profile
+	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.12/site-packages"' >> ~/.bashrc
+	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.12/site-packages"' >> ~/.zprofile
+fi
+
 set -e
 
 git config --global pull.rebase true
@@ -79,13 +87,13 @@ echo ""
 echo "Checking out repositories"
 mkdir -pv ~/langtech
 pushd ~/langtech
-git clone https://github.com/giellalt/giella-core giella-core
-git clone https://github.com/giellalt/shared-mul shared-mul
-git clone https://github.com/giellalt/regtest-kal regression
-git clone https://github.com/giellalt/lang-kal kal
-git clone https://github.com/TinoDidriksen/regtest regtest
-git clone https://github.com/Oqaasileriffik/katersat katersat
-git clone https://github.com/Oqaasileriffik/gloss gloss
+git clone --depth=1 https://github.com/giellalt/giella-core giella-core
+git clone --depth=1 https://github.com/giellalt/shared-mul shared-mul
+git clone --depth=1 https://github.com/giellalt/regtest-kal regression
+git clone --depth=1 https://github.com/giellalt/lang-kal kal
+git clone --depth=1 https://github.com/TinoDidriksen/regtest regtest
+git clone --depth=1 https://github.com/Oqaasileriffik/katersat katersat
+git clone --depth=1 https://github.com/Oqaasileriffik/gloss gloss
 
 echo ""
 echo "Building giella-core"
