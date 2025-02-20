@@ -34,6 +34,7 @@ sudo port select --set python3 python312
 
 export GIELLA_CORE=~/langtech/giella-core
 export PERL_UNICODE=SDA
+export "PATH=/opt/local/libexec/gnubin:$PATH"
 
 set +e
 
@@ -84,6 +85,7 @@ git clone https://github.com/giellalt/regtest-kal regression
 git clone https://github.com/giellalt/lang-kal kal
 git clone https://github.com/TinoDidriksen/regtest regtest
 git clone https://github.com/Oqaasileriffik/katersat katersat
+git clone https://github.com/Oqaasileriffik/gloss gloss
 
 echo ""
 echo "Building giella-core"

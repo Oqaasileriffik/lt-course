@@ -73,6 +73,7 @@ git clone https://github.com/giellalt/regtest-kal regression
 git clone https://github.com/giellalt/lang-kal kal
 git clone https://github.com/TinoDidriksen/regtest regtest
 git clone https://github.com/Oqaasileriffik/katersat katersat
+git clone https://github.com/Oqaasileriffik/gloss gloss
 
 echo ""
 echo "Building giella-core"
