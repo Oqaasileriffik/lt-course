@@ -34,7 +34,7 @@ port uninstall inactive
 
 echo ""
 echo "Updating required ports"
-for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-yaml-libyaml p5-json p5-json-xs timeout python313 py313-regex py313-json5 py313-levenshtein py313-yaml py313-click py313-lxml gsed gmake icu gh realpath
+for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-yaml-libyaml p5-json p5-json-xs timeout python313 py313-regex py313-json5 py313-levenshtein py313-yaml py313-click py313-lxml py313-termcolor gsed gmake icu gh realpath
 do
 	echo "... installing $PKG"
 	yes | port install "$PKG" || echo "FAILED TO INSTALL $PKG"
