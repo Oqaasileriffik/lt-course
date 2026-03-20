@@ -24,7 +24,7 @@ if [[ `uname -s` == 'Darwin' ]]; then
 	export "PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.13/site-packages"
 	export "PATH=/opt/local/libexec/gnubin:$PATH"
 else
-	export LD_PRELOAD=libtcmalloc_minimal.so
+	export LD_PRELOAD=libmimalloc.so
 fi
 NEED_RECONF=""
 
