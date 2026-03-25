@@ -24,18 +24,18 @@ sudo port uninstall inactive
 
 echo ""
 echo "Installing required ports"
-for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-yaml-libyaml p5-json p5-json-xs timeout python313 py313-regex py313-json5 py313-levenshtein py313-yaml py313-click py313-lxml py313-termcolor gsed gmake icu gh realpath
+for PKG in subversion git pkgconfig autoconf automake gawk xz perl5 p5-file-homedir p5-ipc-run p5-app-cpanminus p5-yaml-libyaml p5-json p5-json-xs timeout python314 py314-regex py314-json5 py314-levenshtein py314-yaml py314-click py314-lxml py314-termcolor gsed gmake icu gh realpath
 do
 	echo "... installing $PKG"
 	yes | sudo port install "$PKG" || echo "FAILED TO INSTALL $PKG"
 done
 
-sudo port select --set python3 python313
+sudo port select --set python3 python314
 
 export GIELLA_CORE=~/langtech/giella-core
 export PERL_UNICODE=SDA
 export "PATH=/opt/local/libexec/gnubin:$PATH"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.13/site-packages"
+export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.14/site-packages"
 
 set +e
 
@@ -60,11 +60,11 @@ if [[ -z "$GREP" ]]; then
 	echo 'export "PATH=/opt/local/libexec/gnubin:$PATH"' >> ~/.zprofile
 fi
 
-GREP=`egrep 'export PYTHONPATH' ~/.profile ~/.zprofile 2>/dev/null | grep python3.13/site-packages`
+GREP=`egrep 'export PYTHONPATH' ~/.profile ~/.zprofile 2>/dev/null | grep python3.14/site-packages`
 if [[ -z "$GREP" ]]; then
-	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.13/site-packages"' >> ~/.profile
-	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.13/site-packages"' >> ~/.bashrc
-	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.13/site-packages"' >> ~/.zprofile
+	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.14/site-packages"' >> ~/.profile
+	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.14/site-packages"' >> ~/.bashrc
+	echo 'export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.14/site-packages"' >> ~/.zprofile
 fi
 
 set -e
